@@ -1,0 +1,196 @@
+
+    body {
+        background-color    : #333;
+        font-family         : Arial, sans-serif;
+        font-size           : 14px;
+        color               : #fff;
+      }
+
+      .container {
+        max-width           : 800px;
+        margin              : 0 auto;
+        padding             : 20px;
+        background-color    : #444;
+        border-radius       : 10px;
+        box-shadow          : 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .chatbox {
+        height              : 500px;
+        overflow-y          : scroll;
+        padding             : 10px;
+        border-radius       : 10px;
+        box-shadow          : 0 0 10px rgba(0, 0, 0, 0.2);
+        background-color    : #555;
+      }
+
+      .message {
+        display             : flex;
+        margin-bottom       : 10px;
+      }
+
+      .message .user {
+        margin-right        : 10px;
+        font-weight         : bold;
+      }
+
+      .message .text {
+        background-color    : #666;
+        padding             : 10px;
+        border-radius       : 10px;
+        box-shadow          : 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .inputbox {
+        display             : flex;
+        margin-top          : 10px;
+      }
+
+      .inputbox input[type="text"] {
+        flex-grow           : 1;
+        padding             : 10px;
+        border-radius       : 5px;
+        border              : none;
+        box-shadow          : 0 0 10px rgba(0, 0, 0, 0.2);
+        background-color    : #666;
+        color               : #fff;
+      }
+
+      .inputbox input[type="submit"] {
+        margin-left         : 10px;
+        padding             : 10px;
+        border-radius       : 5px;
+        border              : none;
+        background-color    : #4CAF50;
+        color               : #fff;
+        cursor              : pointer;
+        box-shadow          : 0 0 10px rgba(0, 0, 0, 0.2);
+        text-transform      : uppercase;
+        transition          : all 0.3s ease;
+      }
+
+      .inputbox input[type="submit"]:hover {
+        background-color    : #3e8e41;
+      }
+      
+      @keyframes glow {
+        0% {
+          opacity           : 0;
+        }
+        50% {
+          opacity           : 1;
+        }
+        100% {
+          opacity           : 0;
+        }
+      }
+      ::-webkit-scrollbar {
+        width               : 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background          : #F1F1F1;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background-color    : #888;
+        border-radius       : 8px;
+        border              : 2px solid #F1F1F1;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background-color    : #555;
+      }
+
+      footer {
+        position: relative  ;
+        bottom: 0;
+        left: 0;
+        width: 98%;
+        margin-top: 1em;
+        height: 4em;
+        background-color: #444;
+        padding: 1em;
+        text-align: center;
+        color: black;
+        border-radius: 10px;
+      }
+      
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        footer {
+          font-size: 0.8em;
+          padding: 0.5em;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        footer {
+          font-size: 0.7em;
+          padding: 0.3em;
+        }
+      }
+      
+
+    input[type=submit] {
+    background-color            : #4CAF50; /* Green */
+    border                      : none;
+    color                       : white;
+    padding                     : 10px 20px;
+    text-align                  : center;
+    text-decoration             : none;
+    display                     : inline-block;
+    font-size                   : 12px;
+    margin                      : 4px 2px;
+    cursor                      : pointer;
+    border-radius               : 5px;
+    }
+
+    input[type=submit]:hover {
+    background-color            : #3e8e41; /* Darker green */
+    }
+
+    .button-container {
+    display                     : inline-block;
+    margin-bottom               : 10px;
+    }
+
+    #load-document {
+    border                      : none;
+    margin-left                 : 10px;
+    background-color            : #007bff;
+    color                       : white;
+    padding                     : 10px 20px;
+    text-align                  : center;
+    text-decoration             : none;
+    display                     : inline-block;
+    font-size                   : 16px;
+    margin                      : 4px 2px;
+    cursor                      : pointer;
+    border-radius               : 5px;
+    }
+
+    #load-document:hover {
+    background-color            : #0069d9;
+    }
+
+    #document-file {
+    background-color            : #4CAF50;
+    color                       : white;
+    padding                     : 8px 20px;
+    margin                      : 4px 2px;
+    width                       : 50%;
+    font-size                   : 12px;
+    cursor                      : pointer;
+    border-radius               : 5px;
+    display                     : inline-block;
+    }
+
+    #document-file:hover {
+    background-color            : #3e8e41;
+    }
+
+    #document-file:active {
+    background-color            : #3e8e41;
+    transform                   : translateY(1px);
+    }

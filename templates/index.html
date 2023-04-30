@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.6.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </head>
+  <body>
+      <div class="container">
+          <div class="chatbox" id="chatbox">
+          </div>
+          <form id="message-form">
+              <div class="inputbox">
+                  <input type="text" id="message-input" placeholder="Type your message here...">
+                  <input type="submit" value="Send">
+              </div>
+          </form>
+      </div>
+      <div class="container">
+          <form id="system-prompt">
+              <div class="inputbox">
+                  <input type="text" id="system-input" placeholder="Type your message here...">
+                  <input type="submit" value="Set System Variable">
+              </div>
+          </form>
+      </div>
+      <div class="container">
+        <div class="button-container">
+          <form action="{{ url_for('export_history') }}" method="get">
+              <input type="submit" value="Export History">
+          </form>
+          <form action="{{ url_for('upload_document') }}" method="post" id="upload_document-form" enctype="multipart/form-data">
+            <input type="file" name="document-file" id="document-file" accept=".csv">
+            <input type="submit" id="upload_document_button" value="Load Document">
+        </form>
+        </div>
+    </div>
+    <div id="loaded-document"></div>
+    <script>
+      const chatbox = document.getElementById('chatbox');
+      const messageForm = document.getElementById('message-form');
+      const messageInput = document.getElementById('message-input');
+      const systemPrompt = document.getElementById('system-prompt');
+      const systemInput = document.getElementById('system-input');
+      
+      systemPrompt.addEventListener('submit', e => {
+          e.preventDefault();
+          const system_input = systemInput.value.trim();
+          if (system_input) {
+            const systemPrompt = setSystemPrompt(system_input);
+            fetch('/set_system_input', {
+              method: 'POST',
+              body: new URLSearchParams({
+                system_input: system_input
+              })
+              })
+
+              .catch(error => console.error(error));
+          }
+        }
+      );
+      
+      messageForm.addEventListener('submit', e => {
+          e.preventDefault();
+          const message = messageInput.value.trim();
+          if (message) {
+              const userMessage = createMessage('User', message, 'right');
+              chatbox.appendChild(userMessage);
+              fetch('/send_message', {
+                  method: 'POST',
+                  body: new URLSearchParams({
+                      message: message
+                  })
+              })
+              .then(response => response.text())
+              .then(botResponse => {
+                  const botMessage = createMessage('Assistant', botResponse, 'left');
+                  chatbox.appendChild(botMessage);
+                  messageInput.value = '';
+              })
+              .catch(error => console.error(error));
+          }
+      });
+
+      function createMessage(user, text, align) {
+          const message = document.createElement('div');
+          message.classList.add('message');
+          const userElem = document.createElement('div');
+          userElem.classList.add('user');
+          userElem.innerText = user;
+          const textElem = document.createElement('div');
+          textElem.classList.add('text');
+          textElem.innerText = text;
+          message.appendChild(userElem);
+          message.appendChild(textElem);
+          message.style.justifyContent = align;
+          return message;
+      }
+      function setSystemPrompt(system_input) {
+          const systemPrompt = document.createElement('div');
+          systemPrompt.classList.add('system_prompt');
+          systemPrompt.innerText = system_input;
+          chatbox.appendChild(systemPrompt);
+          return system_input;
+      }  
+    </script>
+      <footer>
+        <div><center><p>2023</p></center></div>
+      </footer> 
+  </body>
+</html>
