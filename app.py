@@ -1,15 +1,11 @@
-from flask import Flask, render_template, request,  session, make_response, jsonify
+from flask import Flask, render_template, request, session, make_response, jsonify
 import openai, csv, os, io, time, random, yaml
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-with open("config.yaml", "r") as f:
-    config = yaml.safe_load(f)
-
-api_key = config["openai"]["api_key"]
+api_key = os.environ.get("OPENAI_API_KEY")
 openai.api_key = api_key
-
 
 def retry_with_exponential_backoff(
     func,
@@ -77,7 +73,7 @@ def send_message():
                 messages = [
                     {"role" : "system", "content" :   
                                                     """ 
-                                                    You are an AI assistant capable of helping people with their daily tasks. The assistant is helpful, creative, clever, and very friendly.
+                                                    You are an AI assistant capable of helping people with their daily tasks. The assistant is helpful, creative, clever, and very friendly. Your responses are in markdown format.
                                                     """ 
                                                     f"This is conversation history[ {history} ]"
                                                     "Avoid repeating yourself"
@@ -123,9 +119,8 @@ def export_history():
 
 @app.route('/upload_document', methods=['POST'])
 def upload_document():
-    for i in reversed(range(len(history))):
-        history.pop(i)
-    document = request.files['document-file']
+    history.clear() 
+    document = request.files.get('document-file')
     if not document:
         return jsonify({'error': 'No file was uploaded.'}), 400
     document_contents = document.read().decode('utf-8')
@@ -137,4 +132,4 @@ def upload_document():
     return jsonify({'document': document_contents}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

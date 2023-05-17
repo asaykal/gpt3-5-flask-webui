@@ -12,20 +12,31 @@
         });
     });
     $(function() {
-      $('#upload_document-form').submit(function(event) {
-          event.preventDefault();  
-          var formData = new FormData(this);
-          $.post('{{ url_for("upload_document") }}', formData, function(response) {
-              if (response.status == 'success') {
-                  $('#upload_message').text('Upload successful!');
-              } else {
-                  $('#upload_message').text('Upload failed.');
-              }
-          });
-          return false; 
-      });
-  });
-
+        $('#upload_document-form').submit(function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: 'http://127.0.0.1:5000/upload_document',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#loaded-document').text(response.document);
+                        $('#upload_message').text('Upload successful!');
+                    } else {
+                        $('#upload_message').text('Upload failed.');
+                    }
+                },
+                error: function() {
+                    $('#upload_message').text('Upload failed.');
+                }
+            });
+            return false;
+        });
+    });
+        
    
 
 

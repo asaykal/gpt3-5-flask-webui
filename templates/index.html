@@ -3,10 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}"/>
+    <title>GPT-3.5 WebUI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
     <script src="{{ url_for('static', filename='js/jquery-3.6.4.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   </head>
   <body>
       <div class="container">
@@ -29,13 +31,13 @@
       </div>
       <div class="container">
         <div class="button-container">
-          <form action="{{ url_for('export_history') }}" method="get">
-              <input type="submit" value="Export History">
-          </form>
-          <form action="{{ url_for('upload_document') }}" method="post" id="upload_document-form" enctype="multipart/form-data">
-            <input type="file" name="document-file" id="document-file" accept=".csv">
-            <input type="submit" id="upload_document_button" value="Load Document">
-        </form>
+            <form action="{{ url_for('export_history') }}" method="get">
+                <input type="submit" value="Export History">
+            </form>
+            <form action="{{ url_for('upload_document') }}" method="post" id="upload_document-form" enctype="multipart/form-data">
+                <input type="file" name="document-file" id="document-file" accept=".csv">
+                <input type="submit" id="upload_document_button" value="Load Document">
+            </form>
         </div>
     </div>
     <div id="loaded-document"></div>
@@ -94,6 +96,7 @@
           const textElem = document.createElement('div');
           textElem.classList.add('text');
           textElem.innerText = text;
+          textElem.innerHTML = marked.parse(text)
           message.appendChild(userElem);
           message.appendChild(textElem);
           message.style.justifyContent = align;
@@ -107,8 +110,8 @@
           return system_input;
       }  
     </script>
-      <footer>
-        <div><center><p>2023</p></center></div>
-      </footer> 
+    <footer>
+      <div><center><p>© 2023 GPT-3.5 Flask UI</p></center></div>
+    </footer>    
   </body>
 </html>
